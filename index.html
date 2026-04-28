@@ -1,0 +1,69 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>wobbydotcom</title>
+
+    <style>
+      * {
+        box-sizing: border-box;
+      }
+
+      body {
+        padding: 0;
+        border: 0;
+        margin: 0;
+        background-color: hsl(120, 28%, 94%);
+        padding: 0 20vw;
+      }
+
+      p {
+        margin: 0;
+        font-size: 2rem;
+      }
+
+      .logo {
+        width: 100%;
+      }
+
+      .above-the-fold {
+        height: 100vh;
+        display: grid;
+        align-items: center;
+        justify-content: center;
+      }
+
+      .v-stack {
+        display: flex;
+        flex-direction: column;
+        row-gap: 20px;
+      }
+
+      footer {
+        margin-top: 100px;
+        padding: 40px 0;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="above-the-fold">
+      <div class="v-stack">
+        <img src="./wobby.svg" alt="Wobby logo" class="logo" />
+        <p>Selling flaps since 2026</p>
+      </div>
+    </div>
+    <div>
+      <p>
+        Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris accumsan
+        ligula euismod risus vulputate, sed maximus mi consectetur. Nunc dapibus
+        odio nulla, sit amet consequat justo fermentum non. Donec vel tortor ex.
+        Proin condimentum urna in pharetra suscipit. Mauris congue lobortis
+        eleifend.
+      </p>
+    </div>
+    <footer>
+      <p>We <em>won't</em> be waiting</p>
+    </footer>
+  </body>
+</html>
