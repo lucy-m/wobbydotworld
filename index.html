@@ -1,6 +1,12 @@
 <!doctype html>
 <html lang="en">
   <head>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Courier+Prime:ital,wght@0,400;0,700;1,400;1,700&display=swap"
+      rel="stylesheet"
+    />
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>wobbydotcom</title>
@@ -11,16 +17,29 @@
       }
 
       body {
+        font-family: "Courier Prime";
         padding: 0;
         border: 0;
         margin: 0;
-        background-color: hsl(120, 28%, 94%);
+        background-color: hsl(154, 21%, 87%);
         padding: 0 20vw;
       }
 
-      p {
+      p,
+      ul,
+      li,
+      h1,
+      h2 {
         margin: 0;
+      }
+
+      p,
+      li {
         font-size: 2rem;
+      }
+
+      h2 {
+        font-size: 2.5rem;
       }
 
       .logo {
@@ -37,30 +56,48 @@
       .v-stack {
         display: flex;
         flex-direction: column;
-        row-gap: 20px;
+        row-gap: 30px;
+      }
+
+      .big {
+        row-gap: 200px;
       }
 
       footer {
         margin-top: 100px;
         padding: 40px 0;
       }
+
+      section.highlight {
+        background-color: hsl(306, 41%, 77%);
+        margin: -40px -50vw;
+        padding: 40px 50vw;
+      }
     </style>
   </head>
   <body>
-    <div class="above-the-fold">
+    <section class="above-the-fold">
       <div class="v-stack">
-        <img src="./wobby.svg" alt="Wobby logo" class="logo" />
+        <img src="./wobby.svg" alt="Wobby" class="logo" />
         <p>Selling flaps since 2026</p>
       </div>
-    </div>
-    <div>
-      <p>
-        Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris accumsan
-        ligula euismod risus vulputate, sed maximus mi consectetur. Nunc dapibus
-        odio nulla, sit amet consequat justo fermentum non. Donec vel tortor ex.
-        Proin condimentum urna in pharetra suscipit. Mauris congue lobortis
-        eleifend.
-      </p>
+    </section>
+    <div class="v-stack big">
+      <section class="v-stack">
+        <p>For a while now, two things have been true...</p>
+        <ul>
+          <li>we have made fans</li>
+          <li>we have been very stupid</li>
+        </ul>
+        <p>now, finally, we feel it's time to go pro.</p>
+        <br />
+        <p>Welcome to Wobby World &mdash; we make fans.</p>
+      </section>
+      <section class="v-stack highlight">
+        <h2>Fruit fans</h2>
+        <p>Image placeholder</p>
+        <p>Good enuff to eat</p>
+      </section>
     </div>
     <footer>
       <p>We <em>won't</em> be waiting</p>
