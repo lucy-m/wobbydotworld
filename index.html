@@ -37,12 +37,18 @@
         font-size: max(1rem, min(3.5vw, 1.5rem));
       }
 
+      h1 {
+        font-size: max(2.2rem, min(8vw, 3.5rem));
+      }
+
       h2 {
         font-size: max(1.6rem, min(5vw, 2.5rem));
       }
 
       .logo {
         width: 100%;
+        grid-column: 1;
+        grid-row: 1;
       }
 
       .above-the-fold {
@@ -51,6 +57,8 @@
         align-items: center;
         justify-content: center;
         padding: 0 20vw;
+        grid-template-columns: 1fr;
+        grid-template-rows: 1fr;
       }
 
       .v-stack {
@@ -68,11 +76,13 @@
         padding: 40px 20vw;
       }
 
-      section.c1, section.c2, section.c3,
+      section.c1,
+      section.c2,
+      section.c3,
       section.content img {
         filter: drop-shadow(3px 3px 7px #828282);
       }
-        
+
       section.c1 {
         background-color: hsl(306, 41%, 77%);
       }
@@ -85,19 +95,32 @@
         background-color: hsl(206, 36%, 73%);
       }
 
+      h1 {
+        margin: 0;
+        margin-top: 100px;
+        padding-left: 20vw;
+      }
+
       section.content {
         padding: 40px 20vw;
+      }
+
+      .bonby {
+        max-width: 400px;
+        margin: auto;
       }
     </style>
   </head>
   <body>
     <section class="above-the-fold">
-      <div class="v-stack">
-        <img src="./wobby.svg" alt="Wobby" class="logo" />
-        <p>Selling flaps since 2026</p>
-      </div>
+      <img src="/public/wobby.svg" class="logo" alt="Wobby" />
+      <img
+        src="/public/subtitle.export.svg"
+        class="logo"
+        alt="Selling flaps since 2026"
+      />
     </section>
-    <div class="v-stack big">
+    <div class="v-stack">
       <section class="content v-stack">
         <p>For a while now, two things have been true...</p>
         <ul>
@@ -111,12 +134,15 @@
           fans.
         </p>
       </section>
+      <h1>Fans</h1>
       <section class="content v-stack c1">
         <h2>FRUIT</h2>
         <img
           src="/public/watermelon.jpg"
           alt="Painted watermelon fan on a green frame"
         />
+        <img src="/public/vee-orange.jpg" />
+        <img src="/public/luce-watermelon.jpg" />
         <p>Good enuff to eat. Cool and refreshing. Shelf life: indefinite.</p>
         <p>(Please don't eat them, they're made of plastic)</p>
         <p>34cm radius, hand painted, 3d printed frames, 0% real fruit juice</p>
@@ -137,8 +163,10 @@
       </section>
       <section class="content v-stack c3">
         <h2>"nice" fans for "nice" people</h2>
-        <img src="/public/many-fans.jpg"
-        alt="A selection of fabric fans of various colours and patterns" />
+        <img
+          src="/public/many-fans.jpg"
+          alt="A selection of fabric fans of various colours and patterns"
+        />
         <p>Think our fans are too funny and you'll be too powerful?</p>
         <p>Or just think our fans are not funny? (youre right)</p>
         <p>
@@ -147,22 +175,26 @@
         </p>
         <p>20cm radius, quilting fat quarters, 3d printed frames</p>
       </section>
+      <h1>About us</h1>
       <section class="content v-stack">
-        <h2>How are they made?</h2>
         <p>
           and proof this isn't AI garbage (we almost wish this was, we have
           spent so many hours on this)
         </p>
         <p>
-          We are Verity and Lucy, couple of <del>legends</del> losers living in
+          We are Verity and Luce, couple of <del>legends</del> losers living in
           Manchester with a stupid idea.
         </p>
+        <img src="/public/us-wall.jpg" />
         <p>
           The fan frames are designed and printed in house (well, in flat to be
-          precise). Meet bonby, the third member of the team.
+          precise). Meet bonby, the third member of the team:
         </p>
-        <img src="/public/bonby.jpg"
-        alt="BambuLab P1S printer with a completed print of a purple fan frame on the bed"
+        <img
+          src="/public/bonby.jpg"
+          class="bonby"
+          alt="BambuLab P1S printer with a completed print of a purple fan frame on the bed"
+        />
         <p>
           we then buy fabric, paint questionable things on them, slap them on a
           frame, then call it day
