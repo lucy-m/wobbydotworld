@@ -43,6 +43,8 @@
 
       .logo {
         width: 100%;
+        grid-column: 1;
+        grid-row: 1;
       }
 
       .above-the-fold {
@@ -51,6 +53,8 @@
         align-items: center;
         justify-content: center;
         padding: 0 20vw;
+        grid-template-columns: 1fr;
+        grid-template-rows: 1fr;
       }
 
       .v-stack {
@@ -68,11 +72,13 @@
         padding: 40px 20vw;
       }
 
-      section.c1, section.c2, section.c3,
+      section.c1,
+      section.c2,
+      section.c3,
       section.content img {
         filter: drop-shadow(3px 3px 7px #828282);
       }
-        
+
       section.c1 {
         background-color: hsl(306, 41%, 77%);
       }
@@ -88,14 +94,21 @@
       section.content {
         padding: 40px 20vw;
       }
+
+      .bonby {
+        max-width: 400px;
+        margin: auto;
+      }
     </style>
   </head>
   <body>
     <section class="above-the-fold">
-      <div class="v-stack">
-        <img src="./wobby.svg" alt="Wobby" class="logo" />
-        <p>Selling flaps since 2026</p>
-      </div>
+      <img src="/public/wobby.svg" class="logo" alt="Wobby" />
+      <img
+        src="/public/subtitle.export.svg"
+        class="logo"
+        alt="Selling flaps since 2026"
+      />
     </section>
     <div class="v-stack big">
       <section class="content v-stack">
@@ -137,8 +150,10 @@
       </section>
       <section class="content v-stack c3">
         <h2>"nice" fans for "nice" people</h2>
-        <img src="/public/many-fans.jpg"
-        alt="A selection of fabric fans of various colours and patterns" />
+        <img
+          src="/public/many-fans.jpg"
+          alt="A selection of fabric fans of various colours and patterns"
+        />
         <p>Think our fans are too funny and you'll be too powerful?</p>
         <p>Or just think our fans are not funny? (youre right)</p>
         <p>
@@ -159,10 +174,13 @@
         </p>
         <p>
           The fan frames are designed and printed in house (well, in flat to be
-          precise). Meet bonby, the third member of the team.
+          precise). Meet bonby, the third member of the team:
         </p>
-        <img src="/public/bonby.jpg"
-        alt="BambuLab P1S printer with a completed print of a purple fan frame on the bed"
+        <img
+          src="/public/bonby.jpg"
+          class="bonby"
+          alt="BambuLab P1S printer with a completed print of a purple fan frame on the bed"
+        />
         <p>
           we then buy fabric, paint questionable things on them, slap them on a
           frame, then call it day
