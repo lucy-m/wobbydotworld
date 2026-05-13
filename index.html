@@ -37,6 +37,10 @@
         font-size: max(1rem, min(3.5vw, 1.5rem));
       }
 
+      small {
+        font-size: 0.75em;
+      }
+
       h1 {
         font-size: max(2.2rem, min(8vw, 3.5rem));
       }
@@ -67,6 +71,10 @@
         row-gap: 30px;
       }
 
+      .v-stack.sections {
+        row-gap: max(2rem, min(10vw, 5rem));
+      }
+
       .big {
         row-gap: 100px;
       }
@@ -74,24 +82,28 @@
       footer {
         margin-top: 100px;
         padding: 40px 20vw;
+        display: flex;
+        flex-direction: column;
+        gap: 12px;
       }
 
-      section.c1,
-      section.c2,
-      section.c3,
-      section.content img {
-        filter: drop-shadow(3px 3px 7px #828282);
+      .c1,
+      .c2,
+      .c3,
+      .content img {
+        filter: drop-shadow(1px 5px 3px hsla(0, 0%, 8%, 0.3))
+          drop-shadow(4px 7px 7px hsla(0, 0%, 51%, 0.3));
       }
 
-      section.c1 {
+      .c1 {
         background-color: hsl(306, 41%, 77%);
       }
 
-      section.c2 {
+      .c2 {
         background-color: hsl(148, 44%, 65%);
       }
 
-      section.c3 {
+      .c3 {
         background-color: hsl(206, 36%, 73%);
       }
 
@@ -107,6 +119,7 @@
 
       .bonby {
         max-width: 400px;
+        width: 100%;
         margin: auto;
       }
     </style>
@@ -120,7 +133,7 @@
         alt="Selling flaps since 2026"
       />
     </section>
-    <div class="v-stack">
+    <div class="v-stack sections">
       <section class="content v-stack">
         <p>For a while now, two things have been true...</p>
         <ul>
@@ -144,7 +157,7 @@
         <img src="/public/vee-orange.jpg" />
         <img src="/public/luce-watermelon.jpg" />
         <p>Good enuff to eat. Cool and refreshing. Shelf life: indefinite.</p>
-        <p>(Please don't eat them, they're made of plastic)</p>
+        <p><small>(Please don't eat them, they're made of plastic)</small></p>
         <p>34cm radius, hand painted, 3d printed frames, 0% real fruit juice</p>
       </section>
       <section class="content v-stack c2">
@@ -153,13 +166,14 @@
           src="/public/princess.jpg"
           alt="Pink fabric fan with 'Princess' painted on on a white speckled frame"
         />
+        <img
+          src="/public/trollop complete.jpeg"
+          alt="Purple painted fan with 'Trollop' painted on a dark purple frame"
+        />
         <p>"Would it be funny if I put x on a fan?"</p>
         <p>"IDK probly not do it anyway"</p>
         <p>(Yes, we do take requests)</p>
-        <p>
-          20cm radius, quilting fat quarters, hand painted, 3d printed frames,
-          100% asbestos free
-        </p>
+        <p>22cm radius, hand painted, 3d printed frames, 100% asbestos free</p>
       </section>
       <section class="content v-stack c3">
         <h2>"nice" fans for "nice" people</h2>
@@ -173,22 +187,26 @@
           We ravaged the craft store for quilting fabric and stuck them on a
           frame. 'nuff said
         </p>
-        <p>20cm radius, quilting fat quarters, 3d printed frames</p>
+        <p>22cm radius, quilting fat quarters, 3d printed frames</p>
       </section>
       <h1>About us</h1>
       <section class="content v-stack">
         <p>
-          and proof this isn't AI garbage (we almost wish this was, we have
-          spent so many hours on this)
-        </p>
-        <p>
-          We are Verity and Luce, couple of <del>legends</del> losers living in
-          Manchester with a stupid idea.
+          We are Verity <small>(she/her)</small> and Luce
+          <small>(they/them or she/her)</small>, couple of
+          <del>legends</del> losers living in Manchester with a love of going
+          out dancing where a hand fan is ESSENTIAL! and very effective for
+          making friends.
         </p>
         <img src="/public/us-wall.jpg" />
         <p>
-          The fan frames are designed and printed in house (well, in flat to be
-          precise). Meet bonby, the third member of the team:
+          And after breaking one too many fans we said enuff is enuff!! If we
+          make our own then we can repair them!
+        </p>
+        <p>
+          The fan frames are designed and printed in house
+          <small>(well, in flat to be precise)</small>. Meet bonby
+          <small>(it/its)</small>, the third member of the team:
         </p>
         <img
           src="/public/bonby.jpg"
@@ -196,15 +214,29 @@
           alt="BambuLab P1S printer with a completed print of a purple fan frame on the bed"
         />
         <p>
+          <small>Sorry about all the dessicant, me lunch box was full</small>
+        </p>
+        <p>
           we then buy fabric, paint questionable things on them, slap them on a
           frame, then call it day
         </p>
+
+        <img
+          src="./public/luce-onardo-da-vinci.jpeg"
+          alt="Person painting 'Clara' on a Scottish flag fan"
+        />
+
         <p>(Yeah it's a bit more involved than that)</p>
       </section>
     </div>
-    <footer>
+    <footer class="c1">
       <p>Still here? Legend, here's the well important stuff:</p>
       <p>Here's that important character 👉 © all rights reserved</p>
+      <p>
+        Wanna have a natter? Or send us some spam?
+        <a href="mailto:site@wobby.world">site@wobby.world</a>
+        (r.i.p. my inbox)
+      </p>
     </footer>
   </body>
 </html>
