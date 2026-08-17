@@ -127,14 +127,64 @@
     <h1>Help us make fans!</h1>
     <button id="make-fan-button" onclick="makeFan()">Assemble Fan</button>
     <div id="fan-count">0 fans</div>
+    <ul id="shop">
+    </ul>
     <script>
         let fanCount = 0;
+        let thingTypes = [
+            { 
+                key: "volunteer"
+                , price: 10
+                , description: "A friend, partner or both kind enough to help you out"
+                , productionSpeed: 1
+                , owned: 0 
+            },
+            { 
+                key: "employee"
+                , price: 100
+                , description: "A human being, paid as little as possible to slap together fans"
+                , productionSpeed: 2
+                , owned: 0 
+            }
+        ];
+
+        thingTypes.forEach(element => {
+            document.getElementById("shop").innerHTML += `<li>
+                <button onclick="buyThing('${element.key}')">${element.key}</button>
+                    Price: ${element.price} 🪭 - Owned: <div id="${element.key}-count">0</div>
+                </li>`;
+        });
+
+        setInterval(gameLoop, 1000);
+
         function makeFan() {
             fanCount++;
+            drawFanCount();
+        }
+
+        function drawFanCount() {
             let fanCountEl = document.getElementById('fan-count');
             fanCountEl.innerHTML = fanCount === 1 
                 ? "1 fan" 
-                : fanCount + " fans";
+                : `${fanCount} fans`;
+        }
+
+        function buyThing(thingType) {
+            var thing = thingTypes.filter(x => x.key === thingType)[0];
+            if(fanCount >= thing.price) {
+                thing.owned++;
+                document.getElementById(`${thing.key}-count`).innerHTML = thing.owned;
+                fanCount = fanCount - thing.price;
+                
+                drawFanCount();
+            }
+        }
+
+        function gameLoop(){
+            thingTypes.forEach(element => {
+                fanCount += element.owned * element.productionSpeed;
+            });
+            drawFanCount();
         }
     </script>
 </body>
