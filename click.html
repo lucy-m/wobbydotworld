@@ -131,8 +131,10 @@
         let fanCount = 0;
         function makeFan() {
             fanCount++;
-            var fanCountEl = document.getElementById('fan-count');
-            fanCountEl.innerHTML = fanCount === 1 ? "1 fan" : fanCount + " fans";
+            let fanCountEl = document.getElementById('fan-count');
+            fanCountEl.innerHTML = fanCount === 1 
+                ? "1 fan" 
+                : fanCount + " fans";
         }
     </script>
 </body>
