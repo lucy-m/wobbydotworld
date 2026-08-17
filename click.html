@@ -131,24 +131,24 @@
     </ul>
     <script>
         let fanCount = 0;
-        let thingTypes = [
-            { 
+        let thingTypes = {
+            volunteer: { 
                 key: "volunteer"
                 , price: 10
                 , description: "A friend, partner or both kind enough to help you out"
                 , productionSpeed: 1
                 , owned: 0 
             },
-            { 
+            employee: { 
                 key: "employee"
                 , price: 100
                 , description: "A human being, paid as little as possible to slap together fans"
                 , productionSpeed: 2
                 , owned: 0 
             }
-        ];
+        };
 
-        thingTypes.forEach(element => {
+        Object.values(thingTypes).forEach(element => {
             document.getElementById("shop").innerHTML += `<li>
                 <button onclick="buyThing('${element.key}')">${element.key}</button>
                     Price: ${element.price} 🪭 - Owned: <span id="${element.key}-count">0</span>
@@ -170,7 +170,7 @@
         }
 
         function buyThing(thingType) {
-            var thing = thingTypes.filter(x => x.key === thingType)[0];
+            var thing = thingTypes[thingType];
             if(fanCount >= thing.price) {
                 thing.owned++;
                 document.getElementById(`${thing.key}-count`).innerHTML = thing.owned;
@@ -181,7 +181,7 @@
         }
 
         function gameLoop(){
-            thingTypes.forEach(element => {
+            Object.values(thingTypes).forEach(element => {
                 fanCount += element.owned * element.productionSpeed;
             });
             drawFanCount();
