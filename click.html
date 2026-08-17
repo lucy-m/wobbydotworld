@@ -129,7 +129,19 @@
     <div id="fan-count">0 fans</div>
     <ul id="shop">
     </ul>
+
     <script>
+        /*
+            TODO: Ratchet price of shop items with each purchase
+            TODO: Add descriptions to UI
+            TODO: Add additional shop items
+            TODO: Add upgrade shop (a shop which allows you to improve already owned stuff)
+            TODO: Add metrics as plyer feedback (e.g. fans per second)
+            TODO: extract JS
+            TODO: extract CSS
+            TODO: Style stuff
+        */
+
         let fanCount = 0;
         let thingTypes = {
             volunteer: { 
@@ -149,8 +161,9 @@
         };
 
         Object.values(thingTypes).forEach(element => {
-            document.getElementById("shop").innerHTML += `<li>
-                <button onclick="buyThing('${element.key}')">${element.key}</button>
+            document.getElementById("shop").innerHTML += 
+                `<li>
+                    <button onclick="buyThing('${element.key}')">${element.key}</button>
                     Price: ${element.price} 🪭 - Owned: <span id="${element.key}-count">0</span>
                 </li>`;
         });
