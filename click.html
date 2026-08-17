@@ -151,7 +151,7 @@
         thingTypes.forEach(element => {
             document.getElementById("shop").innerHTML += `<li>
                 <button onclick="buyThing('${element.key}')">${element.key}</button>
-                    Price: ${element.price} 🪭 - Owned: <div id="${element.key}-count">0</div>
+                    Price: ${element.price} 🪭 - Owned: <span id="${element.key}-count">0</span>
                 </li>`;
         });
 
