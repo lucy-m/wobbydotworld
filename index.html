@@ -9,126 +9,14 @@
     />
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="./public/main.css" />
     <title>🪭 wobby 🪭</title>
-
-    <style>
-      * {
-        box-sizing: border-box;
-      }
-
-      body {
-        font-family: "Courier Prime";
-        padding: 0;
-        border: 0;
-        margin: 0;
-        background-color: hsl(154, 21%, 87%);
-      }
-
-      p,
-      ul,
-      li,
-      c1,
-      h2 {
-        margin: 0;
-      }
-
-      p,
-      li {
-        font-size: max(1rem, min(3.5vw, 1.5rem));
-      }
-
-      small {
-        font-size: 0.75em;
-      }
-
-      h1 {
-        font-size: max(2.2rem, min(8vw, 3.5rem));
-      }
-
-      h2 {
-        font-size: max(1.6rem, min(5vw, 2.5rem));
-      }
-
-      .logo {
-        width: 100%;
-        grid-column: 1;
-        grid-row: 1;
-      }
-
-      .above-the-fold {
-        height: 100vh;
-        display: grid;
-        align-items: center;
-        justify-content: center;
-        padding: 0 20vw;
-        grid-template-columns: 1fr;
-        grid-template-rows: 1fr;
-      }
-
-      .v-stack {
-        display: flex;
-        flex-direction: column;
-        row-gap: 30px;
-      }
-
-      .v-stack.sections {
-        row-gap: max(2rem, min(10vw, 5rem));
-      }
-
-      .big {
-        row-gap: 100px;
-      }
-
-      footer {
-        margin-top: 100px;
-        padding: 40px 20vw;
-        display: flex;
-        flex-direction: column;
-        gap: 12px;
-      }
-
-      .c1,
-      .c2,
-      .c3,
-      .content img {
-        filter: drop-shadow(1px 5px 3px hsla(0, 0%, 8%, 0.3))
-          drop-shadow(4px 7px 7px hsla(0, 0%, 51%, 0.3));
-      }
-
-      .c1 {
-        background-color: hsl(306, 41%, 77%);
-      }
-
-      .c2 {
-        background-color: hsl(148, 44%, 65%);
-      }
-
-      .c3 {
-        background-color: hsl(206, 36%, 73%);
-      }
-
-      h1 {
-        margin: 0;
-        margin-top: 100px;
-        padding-left: 20vw;
-      }
-
-      section.content {
-        padding: 40px 20vw;
-      }
-
-      .bonby {
-        max-width: 400px;
-        width: 100%;
-        margin: auto;
-      }
-    </style>
   </head>
   <body>
     <section class="above-the-fold">
-      <img src="/public/wobby.svg" class="logo" alt="Wobby" />
+      <img src="./public/wobby.svg" class="logo" alt="Wobby" />
       <img
-        src="/public/subtitle.export.svg"
+        src="./public/subtitle.export.svg"
         class="logo"
         alt="Selling flaps since 2026"
       />
@@ -144,11 +32,11 @@
       <section class="content v-stack c1">
         <h2>FRUIT</h2>
         <img
-          src="/public/watermelon.jpg"
+          src="./public/watermelon.jpg"
           alt="Painted watermelon fan on a green frame"
         />
-        <img src="/public/vee-orange.jpg" />
-        <img src="/public/luce-watermelon.jpg" />
+        <img src="./public/vee-orange.jpg" />
+        <img src="./public/luce-watermelon.jpg" />
         <p>Good enuff to eat. Cool and refreshing. Shelf life: indefinite.</p>
         <p><small>(Please don't eat them, they're made of plastic)</small></p>
         <p>34cm radius, hand painted, 0% real fruit juice</p>
@@ -156,11 +44,11 @@
       <section class="content v-stack c2">
         <h2>pithy phrases and/or sayings</h2>
         <img
-          src="/public/word-fans-1.jpeg"
+          src="./public/word-fans-1.jpeg"
           alt="A selection of fans with various words painted on them"
         />
         <img
-          src="/public/trollop complete.jpeg"
+          src="./public/trollop complete.jpeg"
           alt="Purple painted fan with 'Trollop' painted on a dark purple frame"
         />
         <p>"Would it be funny if I put x on a fan?"</p>
@@ -170,7 +58,7 @@
       </section>
       <section class="content v-stack c3">
         <img
-          src="/public/many-fans.jpg"
+          src="./public/many-fans.jpg"
           alt="A selection of fabric fans of various colours and patterns"
         />
       </section>
@@ -183,7 +71,7 @@
           out dancing where a hand fan is ESSENTIAL! and very effective for
           making friends.
         </p>
-        <img src="/public/us-wall.jpg" />
+        <img src="./public/us-wall.jpg" />
         <p>
           And after breaking one too many fans we said enuff is enuff!! If we
           make our own then we can repair them!
