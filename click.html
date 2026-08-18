@@ -1,17 +1,17 @@
 <!DOCTYPE html>
-<html lang="en">  
+<html lang="en">
+
 <head>
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link
-      href="https://fonts.googleapis.com/css2?family=Courier+Prime:ital,wght@0,400;0,700;1,400;1,700&display=swap"
-      rel="stylesheet"
-    />
+    <link href="https://fonts.googleapis.com/css2?family=Courier+Prime:ital,wght@0,400;0,700;1,400;1,700&display=swap"
+        rel="stylesheet" />
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <link rel="stylesheet" href="./public/main.css" />
     <title>🪭 wobby - help us make fans 🪭</title>
 </head>
+
 <body>
     <h1>Help us make fans!</h1>
     <button id="make-fan-button" onclick="makeFan()">Assemble Fan</button>
@@ -30,30 +30,38 @@
 
         let fanCount = 0;
         let thingTypes = {
-            volunteer: { 
+            volunteer: {
                 key: "volunteer"
                 , price: 10
-                , description: "A friend, partner or both kind enough to help you out"
+                , description: "A friend, partner, or other exploitable party kind enough to help you out"
                 , productionSpeed: 1
-                , owned: 0 
+                , owned: 0
             },
-            employee: { 
+            employee: {
                 key: "employee"
                 , price: 100
                 , description: "A human being, paid as little as possible to slap together fans"
                 , productionSpeed: 10
-                , owned: 0 
+                , owned: 0
+            },
+            
+            fanputer: {
+                key: "fanputer"
+                , price: 2000
+                , description: "A state of the art fan assembling machine"
+                , productionSpeed: 200
+                , owned: 0
             }
         };
 
         Object.values(thingTypes).forEach(element => {
-            document.getElementById("shop").innerHTML += 
+            document.getElementById("shop").innerHTML +=
                 `<li>
                     Price: <span id="${element.key}-price">${element.price}</span> 🪭 - Owned: <span id="${element.key}-count">0</span>
                     <div class="description">${element.description}</div>
                     <button onclick="buyThing('${element.key}')">${element.key}</button>
                 </li>`;
-            
+
             //Add function to each thing which calculates the current buy price
             element.calculatePrice = p => (element.owned + 1) * element.price;
         });
@@ -67,25 +75,25 @@
 
         function drawFanCount() {
             let fanCountEl = document.getElementById('fan-count');
-            fanCountEl.innerHTML = fanCount === 1 
-                ? "1 fan" 
+            fanCountEl.innerHTML = fanCount === 1
+                ? "1 fan"
                 : `${fanCount} fans`;
-            
+
         }
 
         function buyThing(thingType) {
             var thing = thingTypes[thingType];
-            if(fanCount >= thing.calculatePrice()) {
+            if (fanCount >= thing.calculatePrice()) {
                 thing.owned++;
                 document.getElementById(`${thing.key}-count`).innerHTML = thing.owned;
                 document.getElementById(`${thing.key}-price`).innerHTML = thing.calculatePrice();
                 fanCount = fanCount - thing.price;
-                
+
                 drawFanCount();
             }
         }
 
-        function gameLoop(){
+        function gameLoop() {
             Object.values(thingTypes).forEach(element => {
                 fanCount += element.owned * element.productionSpeed;
             });
@@ -93,4 +101,5 @@
         }
     </script>
 </body>
+
 </html>
