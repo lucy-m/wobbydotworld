@@ -16,6 +16,7 @@
     <h1>Help us make fans!</h1>
     <button id="make-fan-button" onclick="makeFan()">Assemble Fan</button>
     <div id="fan-count">0 fans</div>
+    <div>Auto assembly rate: <span id="fan-auto-speed">o fps</span></div>
     <ul id="shop">
     </ul>
 
@@ -23,7 +24,6 @@
         /*
             TODO: Add additional shop items (10 total)
             TODO: Add upgrade shop (a shop which allows you to improve already owned stuff)
-            TODO: Add metrics as plyer feedback (e.g. fans per second)
             TODO: extract JS
             TODO: Style stuff
         */
@@ -34,28 +34,28 @@
                 key: "volunteer"
                 , price: 10
                 , description: "A friend, partner, or other exploitable party kind enough to help you out"
-                , productionSpeed: 1
+                , productionSpeed: 0.2
                 , owned: 0
             },
             employee: {
                 key: "employee"
                 , price: 100
                 , description: "A human being, paid as little as possible to slap together fans"
-                , productionSpeed: 10
+                , productionSpeed: 2
                 , owned: 0
             },
             fanpress: { 
                 key: "fanpress"
                 , price: 500
                 , description: "The industrial revolution comes to the fan business with this 2 tonne steel behemoth"
-                , productionSpeed: 50
+                , productionSpeed: 10
                 , owned: 0 
             },
             fanputer: {
                 key: "fanputer"
                 , price: 2000
                 , description: "A state of the art fan assembling machine"
-                , productionSpeed: 200
+                , productionSpeed: 40
                 , owned: 0
             }
         };
@@ -63,13 +63,13 @@
         Object.values(thingTypes).forEach(element => {
             document.getElementById("shop").innerHTML +=
                 `<li>
+                    <button onclick="buyThing('${element.key}')">${element.key}</button>
                     Price: <span id="${element.key}-price">${element.price}</span> 🪭 - Owned: <span id="${element.key}-count">0</span>
                     <div class="description">${element.description}</div>
-                    <button onclick="buyThing('${element.key}')">${element.key}</button>
                 </li>`;
 
             //Add function to each thing which calculates the current buy price
-            element.calculatePrice = p => (element.owned + 1) * element.price;
+            element.calculatePrice = p => Math.floor(Math.pow(element.owned + 1, 1.25)) * element.price;
         });
 
         setInterval(gameLoop, 1000);
@@ -80,20 +80,24 @@
         }
 
         function drawFanCount() {
-            let fanCountEl = document.getElementById('fan-count');
-            fanCountEl.innerHTML = fanCount === 1
+            const fanCountEl = document.getElementById('fan-count');
+            const fcf = Math.floor(fanCount);
+            fanCountEl.innerHTML = fcf === 1
                 ? "1 fan"
-                : `${fanCount} fans`;
+                : `${fcf} fans`;
 
         }
 
         function buyThing(thingType) {
             var thing = thingTypes[thingType];
             if (fanCount >= thing.calculatePrice()) {
+                fanCount = fanCount - thing.calculatePrice();
+
                 thing.owned++;
                 document.getElementById(`${thing.key}-count`).innerHTML = thing.owned;
                 document.getElementById(`${thing.key}-price`).innerHTML = thing.calculatePrice();
-                fanCount = fanCount - thing.price;
+                const fixedNum = Object.values(thingTypes).reduce((acc, x)=> acc += x.owned * x.productionSpeed, 0).toFixed(1);
+                document.getElementById("fan-auto-speed").innerHTML = `${fixedNum} fps`;
 
                 drawFanCount();
             }
