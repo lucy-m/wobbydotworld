@@ -21,8 +21,6 @@
 
     <script>
         /*
-            TODO: Ratchet price of shop items with each purchase
-            TODO: Add descriptions to UI
             TODO: Add additional shop items
             TODO: Add upgrade shop (a shop which allows you to improve already owned stuff)
             TODO: Add metrics as plyer feedback (e.g. fans per second)
@@ -43,7 +41,7 @@
                 key: "employee"
                 , price: 100
                 , description: "A human being, paid as little as possible to slap together fans"
-                , productionSpeed: 2
+                , productionSpeed: 10
                 , owned: 0 
             }
         };
@@ -51,9 +49,13 @@
         Object.values(thingTypes).forEach(element => {
             document.getElementById("shop").innerHTML += 
                 `<li>
+                    Price: <span id="${element.key}-price">${element.price}</span> 🪭 - Owned: <span id="${element.key}-count">0</span>
+                    <div class="description">${element.description}</div>
                     <button onclick="buyThing('${element.key}')">${element.key}</button>
-                    Price: ${element.price} 🪭 - Owned: <span id="${element.key}-count">0</span>
                 </li>`;
+            
+            //Add function to each thing which calculates the current buy price
+            element.calculatePrice = p => (element.owned + 1) * element.price;
         });
 
         setInterval(gameLoop, 1000);
@@ -68,13 +70,15 @@
             fanCountEl.innerHTML = fanCount === 1 
                 ? "1 fan" 
                 : `${fanCount} fans`;
+            
         }
 
         function buyThing(thingType) {
             var thing = thingTypes[thingType];
-            if(fanCount >= thing.price) {
+            if(fanCount >= thing.calculatePrice()) {
                 thing.owned++;
                 document.getElementById(`${thing.key}-count`).innerHTML = thing.owned;
+                document.getElementById(`${thing.key}-price`).innerHTML = thing.calculatePrice();
                 fanCount = fanCount - thing.price;
                 
                 drawFanCount();
