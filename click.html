@@ -69,7 +69,7 @@
                 </li>`;
 
             //Add function to each thing which calculates the current buy price
-            element.calculatePrice = p => Math.floor(Math.pow(element.owned + 1, 1.25)) * element.price;
+            element.calculatePrice = p => Math.floor(Math.pow(1.25, element.owned) * element.price);
         });
 
         setInterval(gameLoop, 1000);
