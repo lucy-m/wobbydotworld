@@ -12,6 +12,11 @@ li {
     padding: 3px;
     max-width: 300px;
     border: rgb(84, 84, 84) 2px solid;
+    display:none;
+}
+
+li.show {
+    display:block;
 }
 
 .gameContainer {

@@ -37,6 +37,7 @@
         */
 
         let fanCount = 0;
+        let maxFanCount = 0;
         let thingTypes = {
             volunteer: {
                 key: "volunteer"
@@ -44,6 +45,7 @@
                 , description: "A friend, partner, or other exploitable party kind enough to help you out"
                 , productionSpeed: 0.2
                 , owned: 0
+                , show: true
             },
             employee: {
                 key: "employee"
@@ -51,6 +53,7 @@
                 , description: "A human being, paid as little as possible to slap together fans"
                 , productionSpeed: 2
                 , owned: 0
+                , show: true
             },
             fanpress: {
                 key: "fanpress"
@@ -58,6 +61,7 @@
                 , description: "The industrial revolution comes to the fan business with this 2 tonne steel behemoth"
                 , productionSpeed: 40
                 , owned: 0
+                , show: false
             },
             factory: {
                 key: "factory"
@@ -65,6 +69,7 @@
                 , description: "Churns out just as many fans as it does great big plumes of black smoke, which is a lot"
                 , productionSpeed: 1000
                 , owned: 0
+                , show: false
             },
             fanputer: {
                 key: "fanputer"
@@ -72,6 +77,23 @@
                 , description: "A state of the art fan assembling super computer that seriously inceases your fps"
                 , productionSpeed: 20000
                 , owned: 0
+                , show: false
+            },
+            stripmine: {
+                key: "stripmine"
+                , price: 5000000
+                , description: "An ancient fan wielding burlesque civilization has led to compacted veins of fans ripe for the picking within the earth's crust"
+                , productionSpeed: 100000
+                , owned: 0
+                , show: false
+            },
+            fantasyland: {
+                key: "fantasyland"
+                , price: 25000000
+                , description: "Pulls fans directly from the collective unconsciousness of mankind"
+                , productionSpeed: 500000
+                , owned: 0
+                , show: false
             },
         };
 
@@ -82,7 +104,7 @@
             element.calculatePrice = p => Math.floor(Math.pow(1.25, element.owned) * element.price);
 
             document.getElementById("shop").innerHTML +=
-                `<li>
+                `<li id="${element.key}-li" class="${element.show ? "show" : ""}">
                     <div>
                         <button onclick="buyThing('${element.key}')">Buy</button>
                         <span class="itemTitle">${element.key}</span>
@@ -112,11 +134,9 @@
             fanCountEl.innerHTML = fcf === 1
                 ? "1 fan"
                 : `${fcf} fans`;
-
         }
 
-        function drawMetrics()
-        {
+        function drawMetrics() {
             const fixedNum = Object.values(thingTypes).reduce((acc, x) => acc += x.owned * x.productionSpeed, 0).toFixed(1);
             document.getElementById("fan-auto-speed").innerHTML = `${fixedNum} fps`;
         }
@@ -125,7 +145,6 @@
             var thing = thingTypes[thingType];
             if (fanCount >= thing.calculatePrice()) {
                 fanCount = fanCount - thing.calculatePrice();
-
                 thing.owned++;
                 document.getElementById(`${thing.key}-count`).innerHTML = thing.owned;
                 document.getElementById(`${thing.key}-price`).innerHTML = thing.calculatePrice();
@@ -138,6 +157,11 @@
         function gameLoop() {
             Object.values(thingTypes).forEach(element => {
                 fanCount += element.owned * element.productionSpeed;
+                var thingElement = document.getElementById(`${element.key}-li`);
+                if(fanCount > element.price / 2 && !thingElement.classList.contains('show'))
+                {
+                    thingElement.classList.add("show");
+                }
             });
             drawFanCount();
         }
@@ -152,17 +176,15 @@
 
         function loadGameState() {
             let gameStateSessionItem = localStorage.getItem('gameState');
-            if(gameStateSessionItem)
-            {
+            if (gameStateSessionItem) {
                 let gameState = JSON.parse(gameStateSessionItem);
                 fanCount = gameState.fanCount;
 
                 Object.values(thingTypes).forEach(tt => {
                     let matchingSavedItems = Object.values(gameState.thingTypes).filter(x => x.key == tt.key);
-                    if(matchingSavedItems && matchingSavedItems[0])
-                    {
+                    if (matchingSavedItems && matchingSavedItems[0]) {
                         tt.owned = matchingSavedItems[0].owned;
-                    }   
+                    }
                 });
 
                 drawFanCount();
