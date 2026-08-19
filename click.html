@@ -9,17 +9,25 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <link rel="stylesheet" href="./public/main.css" />
+    <link rel="stylesheet" href="./public/click.css" />
     <title>🪭 wobby - help us make fans 🪭</title>
 </head>
 
 <body>
     <h1>Help us make fans!</h1>
-    <button id="make-fan-button" onclick="makeFan()">Assemble Fan</button>
-    <div id="fan-count">0 fans</div>
-    <div>Auto assembly rate: <span id="fan-auto-speed">o fps</span></div>
-    <ul id="shop">
-    </ul>
+    <div class="gameContainer">
+        <button id="make-fan-button" onclick="makeFan()">Assemble Fan</button>
+        <div class="metrics">
+            <div id="fan-count">0 fans</div>
+            <div>Auto assembly rate: <span id="fan-auto-speed">o fps</span></div>
+        </div>
 
+        <div class="shopContainer">
+            <h2>Shop</h2>
+            <ul id="shop">
+            </ul>
+        </div>
+    </div>
     <script>
         /*
             TODO: Add additional shop items (10 total)
@@ -70,8 +78,13 @@
         Object.values(thingTypes).forEach(element => {
             document.getElementById("shop").innerHTML +=
                 `<li>
-                    <button onclick="buyThing('${element.key}')">${element.key}</button>
-                    Price: <span id="${element.key}-price">${element.price}</span> 🪭 - Owned: <span id="${element.key}-count">0</span>
+                    <div>
+                        <button onclick="buyThing('${element.key}')">Buy</button>
+                        <span class="itemTitle">${element.key}</span>
+                    </div>
+                    <div class="itemMetrics">
+                        Price: <span id="${element.key}-price">${element.price}</span> 🪭 - Owned: <span id="${element.key}-count">0</span>
+                    </div>
                     <div class="description">${element.description}</div>
                 </li>`;
 
