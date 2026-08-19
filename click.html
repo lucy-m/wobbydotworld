@@ -32,6 +32,8 @@
         /*
             TODO: Add additional shop items (10 total)
             TODO: Add upgrade shop (a shop which allows you to improve already owned stuff)
+            TODO: Save progress
+            TODO: Load progress
             TODO: extract JS
             TODO: Style stuff
         */
@@ -52,12 +54,12 @@
                 , productionSpeed: 2
                 , owned: 0
             },
-            fanpress: { 
+            fanpress: {
                 key: "fanpress"
                 , price: 2000
                 , description: "The industrial revolution comes to the fan business with this 2 tonne steel behemoth"
                 , productionSpeed: 40
-                , owned: 0 
+                , owned: 0
             },
             factory: {
                 key: "factory"
@@ -75,7 +77,12 @@
             },
         };
 
+        loadGameState();
+
         Object.values(thingTypes).forEach(element => {
+            //Add function to each thing which calculates the current buy price
+            element.calculatePrice = p => Math.floor(Math.pow(1.25, element.owned) * element.price);
+
             document.getElementById("shop").innerHTML +=
                 `<li>
                     <div>
@@ -83,16 +90,18 @@
                         <span class="itemTitle">${element.key}</span>
                     </div>
                     <div class="itemMetrics">
-                        Price: <span id="${element.key}-price">${element.price}</span> 🪭 - Owned: <span id="${element.key}-count">0</span>
+                        Price: <span id="${element.key}-price">${element.calculatePrice()}</span> 🪭 - Owned: <span id="${element.key}-count">${element.owned}</span>
                     </div>
                     <div class="description">${element.description}</div>
                 </li>`;
-
-            //Add function to each thing which calculates the current buy price
-            element.calculatePrice = p => Math.floor(Math.pow(1.25, element.owned) * element.price);
         });
 
+        //Set up game loops
+
+        //Run general game loop every second
         setInterval(gameLoop, 1000);
+        //Save game every 10 seconds
+        setInterval(saveGameState, 10000);
 
         function makeFan() {
             fanCount++;
@@ -108,6 +117,12 @@
 
         }
 
+        function drawMetrics()
+        {
+            const fixedNum = Object.values(thingTypes).reduce((acc, x) => acc += x.owned * x.productionSpeed, 0).toFixed(1);
+            document.getElementById("fan-auto-speed").innerHTML = `${fixedNum} fps`;
+        }
+
         function buyThing(thingType) {
             var thing = thingTypes[thingType];
             if (fanCount >= thing.calculatePrice()) {
@@ -116,9 +131,8 @@
                 thing.owned++;
                 document.getElementById(`${thing.key}-count`).innerHTML = thing.owned;
                 document.getElementById(`${thing.key}-price`).innerHTML = thing.calculatePrice();
-                const fixedNum = Object.values(thingTypes).reduce((acc, x)=> acc += x.owned * x.productionSpeed, 0).toFixed(1);
-                document.getElementById("fan-auto-speed").innerHTML = `${fixedNum} fps`;
 
+                drawMetrics();
                 drawFanCount();
             }
         }
@@ -128,6 +142,34 @@
                 fanCount += element.owned * element.productionSpeed;
             });
             drawFanCount();
+        }
+
+        function saveGameState() {
+            let gameState = {
+                fanCount: fanCount,
+                thingTypes: thingTypes
+            };
+            localStorage.setItem('gameState', JSON.stringify(gameState));
+        }
+
+        function loadGameState() {
+            let gameStateSessionItem = localStorage.getItem('gameState');
+            if(gameStateSessionItem)
+            {
+                let gameState = JSON.parse(gameStateSessionItem);
+                fanCount = gameState.fanCount;
+
+                Object.values(thingTypes).forEach(tt => {
+                    let matchingSavedItems = Object.values(gameState.thingTypes).filter(x => x.key == tt.key);
+                    if(matchingSavedItems && matchingSavedItems[0])
+                    {
+                        tt.owned = matchingSavedItems[0].owned;
+                    }   
+                });
+
+                drawFanCount();
+                drawMetrics();
+            }
         }
     </script>
 </body>
