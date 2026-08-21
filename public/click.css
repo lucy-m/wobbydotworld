@@ -20,6 +20,14 @@ li.show {
     display:block;
 }
 
+li button {
+    background-color: rgba(255, 77, 77, 0.6);
+}
+
+li.canAfford button {
+    background-color: greenyellow;
+}
+
 li.show + li:not(.show) {
     display:block;
     filter:blur(4px);

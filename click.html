@@ -162,6 +162,14 @@
                 {
                     thingElement.classList.add("show");
                 }
+
+                if(fanCount >= element.calculatePrice() && !thingElement.classList.contains('canAfford'))
+                {
+                    thingElement.classList.add("canAfford");
+                }
+                else if(fanCount < element.calculatePrice() && thingElement.classList.contains('canAfford')){
+                    thingElement.classList.remove("canAfford");
+                }
             });
             drawFanCount();
         }
