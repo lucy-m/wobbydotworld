@@ -151,26 +151,30 @@
 
                 drawMetrics();
                 drawFanCount();
+
+                const thingBtnElement = document.getElementById(`${thing.key}-li`).getElementsByTagName('button')[0];
+                if (fanCount >= thing.calculatePrice()) {
+                    thingBtnElement?.removeAttribute("disabled");
+                }
+                else if (fanCount < thing.calculatePrice()) {
+                    thingBtnElement?.setAttribute("disabled", true);
+                }
             }
         }
 
         function gameLoop() {
-            Object.values(thingTypes).forEach(element => {
-                fanCount += element.owned * element.productionSpeed;
-                var thingElement = document.getElementById(`${element.key}-li`);
-                var thingBtnElement = thingElement.getElementsByTagName('button')[0];
-                if(fanCount > element.price / 2 && !thingElement.classList.contains('show'))
-                {
+            Object.values(thingTypes).forEach(thing => {
+                fanCount += thing.owned * thing.productionSpeed;
+                const thingElement = document.getElementById(`${thing.key}-li`);
+                const thingBtnElement = thingElement.getElementsByTagName('button')[0];
+                if (fanCount > thing.price / 2 && !thingElement.classList.contains('show')) {
                     thingElement.classList.add("show");
                 }
 
-                if(fanCount >= element.calculatePrice() && !thingElement.classList.contains('canAfford'))
-                {
-                    thingElement.classList.add("canAfford");
+                if (fanCount >= thing.calculatePrice()) {
                     thingBtnElement?.removeAttribute("disabled");
                 }
-                else if(fanCount < element.calculatePrice() && thingElement.classList.contains('canAfford')){
-                    thingElement.classList.remove("canAfford");
+                else if (fanCount < thing.calculatePrice()) {
                     thingBtnElement?.setAttribute("disabled", true);
                 }
             });
