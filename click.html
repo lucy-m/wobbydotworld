@@ -139,6 +139,7 @@
                         <h3>${u.name}</h3>
                         <p class="description">${u.description}</p>
                         <button disabled onclick="buyUpgrade('${element.key}',${i})">Buy</button>
+                        <h3>Price: ${u.price} fans</h3>
                     </div>
                 `).reduce((acc, x) => acc += x, "") ?? "";
 
@@ -211,8 +212,11 @@
         function buyUpgrade(thingKey,upgradeIndex){
             const upgrade = thingTypes[thingKey].upgrades[upgradeIndex];
             if(upgrade.price <= fanCount) {
+                const thingElement = document.getElementById(`${thingKey}-li`);
+                const upgradeElement = thingElement.getElementsByClassName('upgrade')[upgradeIndex];
                 fanCount -= upgrade.price;
                 upgrade.owned = true;
+                upgradeElement.classList.add("owned");
             }
             drawMetrics();
         }
