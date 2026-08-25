@@ -83,6 +83,24 @@
                 , description: "A human being, paid as little as possible to slap together fans"
                 , productionSpeed: 2
                 , owned: 0
+                , upgrades: [
+                    {
+                        upgradeFun: x => x * 2
+                        , name: "Fan jigs"
+                        , description: "A simple bit of wood that does all the fiddly folding."
+                        , effectDescription: "Multiplies production speed by 2"
+                        , price: 5000
+                        , owned: false
+                    },
+                    {
+                        upgradeFun: x => x * 10
+                        , name: "Mandatory non-optional overtime"
+                        , description: "Probably legal if they sign away their rights under the working time directive... probably."
+                        , effectDescription: "Multiplies production speed by 10"
+                        , price: 40000
+                        , owned: false
+                    },
+                ]
                 , show: false
             },
             fanpress: {
@@ -91,6 +109,24 @@
                 , description: "The industrial revolution comes to the fan business with this 2 tonne steel behemoth"
                 , productionSpeed: 40
                 , owned: 0
+                , upgrades: [
+                    {
+                        upgradeFun: x => x * 2
+                        , name: "Fan lube"
+                        , description: "One typo away from a completely different sort of upgrade."
+                        , effectDescription: "Multiplies production speed by 2"
+                        , price: 50000
+                        , owned: false
+                    },
+                    {
+                        upgradeFun: x => x * 10
+                        , name: "Remove safety limiters"
+                        , description: "What's a finger here or there when you can make fans so very quickly?"
+                        , effectDescription: "Multiplies production speed by 10"
+                        , price: 400000
+                        , owned: false
+                    },
+                ]
                 , show: false
             },
             factory: {
@@ -99,6 +135,24 @@
                 , description: "Churns out just as many fans as it does great big plumes of black smoke, which is a lot"
                 , productionSpeed: 1000
                 , owned: 0
+                , upgrades: [
+                    {
+                        upgradeFun: x => x * 2
+                        , name: "Lean manufacturing"
+                        , description: "Turns out keeping the fabric a five minute walk from the frames was suboptimal"
+                        , effectDescription: "Multiplies production speed by 2"
+                        , price: 400000
+                        , owned: false
+                    },
+                    {
+                        upgradeFun: x => x * 10
+                        , name: "Cool robot arms"
+                        , description: "Programme them to assemble stuff, and keep your squishy bits away from the grabbers"
+                        , effectDescription: "Multiplies production speed by 10"
+                        , price: 1600000
+                        , owned: false
+                    },
+                ]
                 , show: false
             },
             fanputer: {
