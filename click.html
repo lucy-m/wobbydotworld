@@ -183,7 +183,7 @@
         }
 
         function drawMetrics() {
-            const fixedNum = Object.values(thingTypes).reduce((acc, x) => acc += x.owned * x.productionSpeed, 0).toFixed(1);
+            const fixedNum = Object.values(thingTypes).reduce((acc, x) => acc += x.owned * calculateProductionSpeed(x), 0).toFixed(1);
             document.getElementById("fan-auto-speed").innerHTML = `${fixedNum} fps`;
         }
 
@@ -214,11 +214,19 @@
                 fanCount -= upgrade.price;
                 upgrade.owned = true;
             }
+            drawMetrics();
+        }
+
+        function calculateProductionSpeed(thing) {
+            return thing.upgrades
+                    ?.filter(u => u.owned)
+                    .reduce((acc, u) => u.upgradeFun(acc), thing.productionSpeed)
+                    ?? thing.productionSpeed;
         }
 
         function gameLoop() {
             Object.values(thingTypes).forEach(thing => {
-                fanCount += thing.owned * thing.productionSpeed;
+                fanCount += thing.owned * calculateProductionSpeed(thing);
                 const thingElement = document.getElementById(`${thing.key}-li`);
                 const thingBtnElement = thingElement.getElementsByTagName('button')[0];
                 if (fanCount > thing.price / 2 && !thingElement.classList.contains('show')) {
