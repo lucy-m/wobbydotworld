@@ -221,7 +221,7 @@
                     },
                     {
                         upgradeFun: x => x * 10
-                        , name: "Mind controls"
+                        , name: "Mind control"
                         , description: "You WILL think about fans, whether you like it or not."
                         , effectDescription: "Multiplies production speed by 10"
                         , price: 20000000000
@@ -339,6 +339,8 @@
         function gameLoop() {
             Object.values(thingTypes).forEach(thing => {
                 fanCount += thing.owned * calculateProductionSpeed(thing);
+                maxFanCount = fanCount > maxFanCount ? maxFanCount = fanCount : maxFanCount;
+
                 const thingElement = document.getElementById(`${thing.key}-li`);
                 const thingBtnElement = thingElement.getElementsByTagName('button')[0];
                 if (fanCount > thing.price / 2 && !thingElement.classList.contains('show')) {
@@ -353,7 +355,13 @@
                 }
 
                 thing.upgrades?.forEach((u,i) => {
-                    const ueBtn = thingElement.getElementsByClassName('upgrade')[i].getElementsByTagName("button")[0];
+                    const uElement = thingElement.getElementsByClassName('upgrade')[i];
+                    const ueBtn = uElement.getElementsByTagName("button")[0];
+
+                    if(maxFanCount > u.price && !uElement.classList.contains("discovered")){
+                        uElement.classList.add("discovered");
+                    }
+
                     if(u.price <= fanCount && !u.owned) {
                         ueBtn?.removeAttribute("disabled");
                     } else {
