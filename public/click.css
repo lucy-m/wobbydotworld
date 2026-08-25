@@ -39,7 +39,7 @@ li .owned button {
 }
 
 li.show + li:not(.show) {
-    display:block;
+    display:flex;
     filter:blur(3px);
 }
 
@@ -58,8 +58,15 @@ li.show + li:not(.show)::after {
 }
 
 .description {
-    margin-top:5px;
     font-style: italic;
+}
+
+.effectDescription {
+    margin-bottom: 10px;
+}
+
+.description, .effectDescription{
+    margin-top:5px;
     font-size: 0.8rem;
 }
 

@@ -39,9 +39,7 @@
         //!!SET TO 1000 for testing!!
         let fanCount = 1000;
         let maxFanCount = 0;
-        let globalUpgrades = {
-
-        };
+        
         let thingTypes = {
             volunteer: {
                 key: "volunteer"
@@ -139,7 +137,7 @@
                     {
                         upgradeFun: x => x * 2
                         , name: "Lean manufacturing"
-                        , description: "Turns out keeping the fabric a five minute walk from the frames was suboptimal"
+                        , description: "Turns out keeping the fabric a five minute walk from the frames was suboptimal."
                         , effectDescription: "Multiplies production speed by 2"
                         , price: 400000
                         , owned: false
@@ -147,7 +145,7 @@
                     {
                         upgradeFun: x => x * 10
                         , name: "Cool robot arms"
-                        , description: "Programme them to assemble stuff, and keep your squishy bits away from the grabbers"
+                        , description: "Programme them to assemble stuff, and keep your squishy bits away from the grabbers."
                         , effectDescription: "Multiplies production speed by 10"
                         , price: 1600000
                         , owned: false
@@ -161,6 +159,24 @@
                 , description: "A state of the art fan assembling super computer that seriously increases your fps"
                 , productionSpeed: 20000
                 , owned: 0
+                , upgrades: [
+                    {
+                        upgradeFun: x => x * 2
+                        , name: "Air cooling"
+                        , description: "Big fans to cool big computers which make fans."
+                        , effectDescription: "Multiplies production speed by 2"
+                        , price: 10000000
+                        , owned: false
+                    },
+                    {
+                        upgradeFun: x => x * 10
+                        , name: "The singularity"
+                        , description: "Your fanputers design fanputers which make fans faster than they themselves make fans."
+                        , effectDescription: "Multiplies production speed by 10"
+                        , price: 800000000
+                        , owned: false
+                    },
+                ]
                 , show: false
             },
             stripmine: {
@@ -169,6 +185,24 @@
                 , description: "An ancient fan wielding burlesque civilization has led to compacted veins of fans ripe for the picking within the earth's crust"
                 , productionSpeed: 100000
                 , owned: 0
+                , upgrades: [
+                    {
+                        upgradeFun: x => x * 2
+                        , name: "Geological surveys"
+                        , description: "Much easier to find fans underground when you actually know where they are."
+                        , effectDescription: "Multiplies production speed by 2"
+                        , price: 50000000
+                        , owned: false
+                    },
+                    {
+                        upgradeFun: x => x * 10
+                        , name: "Deep mining"
+                        , description: "Dig too deep, too greedily."
+                        , effectDescription: "Multiplies production speed by 10"
+                        , price: 4000000000
+                        , owned: false
+                    },
+                ]
                 , show: false
             },
             fantasyland: {
@@ -177,6 +211,24 @@
                 , description: "Pulls fans directly from the collective unconsciousness of mankind"
                 , productionSpeed: 500000
                 , owned: 0
+                , upgrades: [
+                    {
+                        upgradeFun: x => x * 2
+                        , name: "Subliminal advertising"
+                        , description: "You're thinking about fans right now, aren't you?"
+                        , effectDescription: "Multiplies production speed by 2"
+                        , price: 250000000
+                        , owned: false
+                    },
+                    {
+                        upgradeFun: x => x * 10
+                        , name: "Mind controls"
+                        , description: "You WILL think about fans, whether you like it or not."
+                        , effectDescription: "Multiplies production speed by 10"
+                        , price: 20000000000
+                        , owned: false
+                    },
+                ]
                 , show: false
             },
         };
@@ -189,11 +241,12 @@
 
             const upgradeElements = element?.upgrades?.map((u,i) =>
                 `
-                    <div class="upgrade">
+                    <div class="upgrade ${u.owned ? 'owned' : ''}">
                         <h3>${u.name}</h3>
                         <p class="description">${u.description}</p>
-                        <button disabled onclick="buyUpgrade('${element.key}',${i})">Buy</button>
+                        <p class="effectDescription">${u.effectDescription}</p>
                         <h3>Price: ${u.price} fans</h3>
+                        <button disabled onclick="buyUpgrade('${element.key}',${i})">Buy</button>
                     </div>
                 `).reduce((acc, x) => acc += x, "") ?? "";
 
@@ -261,6 +314,7 @@
                     thingBtnElement?.setAttribute("disabled", true);
                 }
             }
+            saveGameState();
         }
 
         function buyUpgrade(thingKey,upgradeIndex){
@@ -273,6 +327,7 @@
                 upgradeElement.classList.add("owned");
             }
             drawMetrics();
+            saveGameState();
         }
 
         function calculateProductionSpeed(thing) {
@@ -328,6 +383,7 @@
                     let matchingSavedItems = Object.values(gameState.thingTypes).filter(x => x.key == tt.key);
                     if (matchingSavedItems && matchingSavedItems[0]) {
                         tt.owned = matchingSavedItems[0].owned;
+                        tt.upgrades.forEach((x,i) => tt.upgrades[i].owned = matchingSavedItems[0].upgrades[i]?.owned)
                     }
                 });
 
