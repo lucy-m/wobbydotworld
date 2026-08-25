@@ -1,0 +1,398 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Courier+Prime:ital,wght@0,400;0,700;1,400;1,700&display=swap"
+        rel="stylesheet" />
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="./public/main.css" />
+    <link rel="stylesheet" href="./public/click.css" />
+    <title>🪭 wobby - help us make fans 🪭</title>
+</head>
+
+<body>
+    <h1>Help us make fans!</h1>
+    <div class="gameContainer">
+        <button id="make-fan-button" onclick="makeFan()">Assemble Fan</button>
+        <div class="metrics">
+            <div id="fan-count">0 fans</div>
+            <div>Auto assembly rate: <span id="fan-auto-speed">o fps</span></div>
+        </div>
+
+        <div class="shopContainer">
+            <h2>Shop</h2>
+            <ul id="shop">
+            </ul>
+        </div>
+    </div>
+    <script>
+
+        let fanCount = 0;
+        let maxFanCount = 0;
+
+        let thingTypes = {
+            volunteer: {
+                key: "volunteer"
+                , price: 10
+                , description: "A friend, partner, or other exploitable party kind enough to help you out"
+                , productionSpeed: 0.2
+                , owned: 0
+                , upgrades: [
+                    {
+                        upgradeFun: x => x + 0.8
+                        , name: "Internships"
+                        , description: "Your volunteers are now interns, working as hard as employees but without the pesky need to pay them"
+                        , effectDescription: "Volunteers work as hard as employees (+0.8fps)"
+                        , price: 500
+                        , owned: false
+                    },
+                    {
+                        upgradeFun: x => x * 2
+                        , name: "Parasocial relationships"
+                        , description: "They love you, they really love you."
+                        , effectDescription: "Multiplies production speed by 2"
+                        , price: 2000
+                        , owned: false
+                    },
+                    {
+                        upgradeFun: x => x * 10
+                        , name: "Cult of the cool"
+                        , description: "You are a god, they are your sheep."
+                        , effectDescription: "Multiplies production speed by 10"
+                        , price: 20000
+                        , owned: false
+                    },
+                ]
+                , show: true
+            },
+            employee: {
+                key: "employee"
+                , price: 100
+                , description: "A human being, paid as little as possible to slap together fans"
+                , productionSpeed: 2
+                , owned: 0
+                , upgrades: [
+                    {
+                        upgradeFun: x => x * 2
+                        , name: "Fan jigs"
+                        , description: "A simple bit of wood that does all the fiddly folding."
+                        , effectDescription: "Multiplies production speed by 2"
+                        , price: 5000
+                        , owned: false
+                    },
+                    {
+                        upgradeFun: x => x * 10
+                        , name: "Mandatory non-optional overtime"
+                        , description: "Probably legal if they sign away their rights under the working time directive... probably."
+                        , effectDescription: "Multiplies production speed by 10"
+                        , price: 40000
+                        , owned: false
+                    },
+                ]
+                , show: false
+            },
+            fanpress: {
+                key: "fanpress"
+                , price: 2000
+                , description: "The industrial revolution comes to the fan business with this 2 tonne steel behemoth"
+                , productionSpeed: 40
+                , owned: 0
+                , upgrades: [
+                    {
+                        upgradeFun: x => x * 2
+                        , name: "Fan lube"
+                        , description: "One typo away from a completely different sort of upgrade."
+                        , effectDescription: "Multiplies production speed by 2"
+                        , price: 50000
+                        , owned: false
+                    },
+                    {
+                        upgradeFun: x => x * 10
+                        , name: "Remove safety limiters"
+                        , description: "What's a finger here or there when you can make fans so very quickly?"
+                        , effectDescription: "Multiplies production speed by 10"
+                        , price: 400000
+                        , owned: false
+                    },
+                ]
+                , show: false
+            },
+            factory: {
+                key: "factory"
+                , price: 50000
+                , description: "Churns out just as many fans as it does great big plumes of black smoke, which is a lot"
+                , productionSpeed: 1000
+                , owned: 0
+                , upgrades: [
+                    {
+                        upgradeFun: x => x * 2
+                        , name: "Lean manufacturing"
+                        , description: "Turns out keeping the fabric a five minute walk from the frames was suboptimal."
+                        , effectDescription: "Multiplies production speed by 2"
+                        , price: 400000
+                        , owned: false
+                    },
+                    {
+                        upgradeFun: x => x * 10
+                        , name: "Cool robot arms"
+                        , description: "Programme them to assemble stuff, and keep your squishy bits away from the grabbers."
+                        , effectDescription: "Multiplies production speed by 10"
+                        , price: 1600000
+                        , owned: false
+                    },
+                ]
+                , show: false
+            },
+            fanputer: {
+                key: "fanputer"
+                , price: 1000000
+                , description: "A state of the art fan assembling super computer that seriously increases your fps"
+                , productionSpeed: 20000
+                , owned: 0
+                , upgrades: [
+                    {
+                        upgradeFun: x => x * 2
+                        , name: "Air cooling"
+                        , description: "Big fans to cool big computers which make fans."
+                        , effectDescription: "Multiplies production speed by 2"
+                        , price: 10000000
+                        , owned: false
+                    },
+                    {
+                        upgradeFun: x => x * 10
+                        , name: "The singularity"
+                        , description: "Your fanputers design fanputers which make fans faster than they themselves make fans."
+                        , effectDescription: "Multiplies production speed by 10"
+                        , price: 800000000
+                        , owned: false
+                    },
+                ]
+                , show: false
+            },
+            stripmine: {
+                key: "stripmine"
+                , price: 5000000
+                , description: "An ancient fan wielding burlesque civilization has led to compacted veins of fans ripe for the picking within the earth's crust"
+                , productionSpeed: 100000
+                , owned: 0
+                , upgrades: [
+                    {
+                        upgradeFun: x => x * 2
+                        , name: "Geological surveys"
+                        , description: "Much easier to find fans underground when you actually know where they are."
+                        , effectDescription: "Multiplies production speed by 2"
+                        , price: 50000000
+                        , owned: false
+                    },
+                    {
+                        upgradeFun: x => x * 10
+                        , name: "Deep mining"
+                        , description: "Dig too deep, too greedily."
+                        , effectDescription: "Multiplies production speed by 10"
+                        , price: 4000000000
+                        , owned: false
+                    },
+                ]
+                , show: false
+            },
+            fantasyland: {
+                key: "fantasyland"
+                , price: 25000000
+                , description: "Pulls fans directly from the collective unconsciousness of mankind"
+                , productionSpeed: 500000
+                , owned: 0
+                , upgrades: [
+                    {
+                        upgradeFun: x => x * 2
+                        , name: "Subliminal advertising"
+                        , description: "You're thinking about fans right now, aren't you?"
+                        , effectDescription: "Multiplies production speed by 2"
+                        , price: 250000000
+                        , owned: false
+                    },
+                    {
+                        upgradeFun: x => x * 10
+                        , name: "Mind control"
+                        , description: "You WILL think about fans, whether you like it or not."
+                        , effectDescription: "Multiplies production speed by 10"
+                        , price: 20000000000
+                        , owned: false
+                    },
+                ]
+                , show: false
+            },
+        };
+
+        loadGameState();
+
+        Object.values(thingTypes).forEach(element => {
+            //Add function to each thing which calculates the current buy price
+            element.calculatePrice = p => Math.floor(Math.pow(1.25, element.owned) * element.price);
+
+            const upgradeElements = element?.upgrades?.map((u,i) =>
+                `
+                    <div class="upgrade ${u.owned ? 'owned' : ''}">
+                        <h3>${u.name}</h3>
+                        <p class="description">${u.description}</p>
+                        <p class="effectDescription">${u.effectDescription}</p>
+                        <h3>Price: ${u.price} fans</h3>
+                        <button disabled onclick="buyUpgrade('${element.key}',${i})">Buy</button>
+                    </div>
+                `).reduce((acc, x) => acc += x, "") ?? "";
+
+            document.getElementById("shop").innerHTML +=
+                `<li id="${element.key}-li" class="${element.show ? "show" : ""}">
+                    <div class="building">
+                        <div>
+                            <button onclick="buyThing('${element.key}')" disabled>Buy</button>
+                            <span class="itemTitle">${element.key}</span>
+                        </div>
+                        <div class="itemMetrics">
+                            Price: <span id="${element.key}-price">${element.calculatePrice()}</span> 🪭 - Owned: <span id="${element.key}-count">${element.owned}</span>
+                            <br />
+                            Base production speed: <span id="${element.key}">${element.productionSpeed}</span>fps
+                        </div>
+                        <div class="description">${element.description}</div>
+                    </div>
+                    <div class="building-upgrades">
+                        ${upgradeElements}
+                    </div>
+                </li>`;
+        });
+
+        //Set up game loops
+
+        //Run general game loop every second
+        setInterval(gameLoop, 1000);
+        //Save game every 10 seconds
+        setInterval(saveGameState, 10000);
+
+        function makeFan() {
+            fanCount++;
+            drawFanCount();
+        }
+
+        function drawFanCount() {
+            const fanCountEl = document.getElementById('fan-count');
+            const fcf = Math.floor(fanCount);
+            fanCountEl.innerHTML = fcf === 1
+                ? "1 fan"
+                : `${fcf} fans`;
+        }
+
+        function drawMetrics() {
+            const fixedNum = Object.values(thingTypes).reduce((acc, x) => acc += x.owned * calculateProductionSpeed(x), 0).toFixed(1);
+            document.getElementById("fan-auto-speed").innerHTML = `${fixedNum} fps`;
+        }
+
+        function buyThing(thingType) {
+            var thing = thingTypes[thingType];
+            if (fanCount >= thing.calculatePrice()) {
+                fanCount = fanCount - thing.calculatePrice();
+                thing.owned++;
+                document.getElementById(`${thing.key}-count`).innerHTML = thing.owned;
+                document.getElementById(`${thing.key}-price`).innerHTML = thing.calculatePrice();
+
+                drawMetrics();
+                drawFanCount();
+
+                const thingBtnElement = document.getElementById(`${thing.key}-li`).getElementsByTagName('button')[0];
+                if (fanCount >= thing.calculatePrice()) {
+                    thingBtnElement?.removeAttribute("disabled");
+                }
+                else if (fanCount < thing.calculatePrice()) {
+                    thingBtnElement?.setAttribute("disabled", true);
+                }
+            }
+            saveGameState();
+        }
+
+        function buyUpgrade(thingKey,upgradeIndex){
+            const upgrade = thingTypes[thingKey].upgrades[upgradeIndex];
+            if(upgrade.price <= fanCount) {
+                const thingElement = document.getElementById(`${thingKey}-li`);
+                const upgradeElement = thingElement.getElementsByClassName('upgrade')[upgradeIndex];
+                fanCount -= upgrade.price;
+                upgrade.owned = true;
+                upgradeElement.classList.add("owned");
+            }
+            drawMetrics();
+            saveGameState();
+        }
+
+        function calculateProductionSpeed(thing) {
+            return thing.upgrades
+                    ?.filter(u => u.owned)
+                    .reduce((acc, u) => u.upgradeFun(acc), thing.productionSpeed)
+                    ?? thing.productionSpeed;
+        }
+
+        function gameLoop() {
+            Object.values(thingTypes).forEach(thing => {
+                fanCount += thing.owned * calculateProductionSpeed(thing);
+                maxFanCount = fanCount > maxFanCount ? maxFanCount = fanCount : maxFanCount;
+
+                const thingElement = document.getElementById(`${thing.key}-li`);
+                const thingBtnElement = thingElement.getElementsByTagName('button')[0];
+                if (fanCount > thing.price / 2 && !thingElement.classList.contains('show')) {
+                    thingElement.classList.add("show");
+                }
+
+                if (fanCount >= thing.calculatePrice()) {
+                    thingBtnElement?.removeAttribute("disabled");
+                }
+                else if (fanCount < thing.calculatePrice()) {
+                    thingBtnElement?.setAttribute("disabled", true);
+                }
+
+                thing.upgrades?.forEach((u,i) => {
+                    const uElement = thingElement.getElementsByClassName('upgrade')[i];
+                    const ueBtn = uElement.getElementsByTagName("button")[0];
+
+                    if(maxFanCount > u.price && !uElement.classList.contains("discovered")){
+                        uElement.classList.add("discovered");
+                    }
+
+                    if(u.price <= fanCount && !u.owned) {
+                        ueBtn?.removeAttribute("disabled");
+                    } else {
+                        ueBtn?.setAttribute("disabled", true);
+                    }
+                });
+            });
+            drawFanCount();
+        }
+
+        function saveGameState() {
+            let gameState = {
+                fanCount: fanCount,
+                thingTypes: thingTypes
+            };
+            localStorage.setItem('gameState', JSON.stringify(gameState));
+        }
+
+        function loadGameState() {
+            let gameStateSessionItem = localStorage.getItem('gameState');
+            if (gameStateSessionItem) {
+                let gameState = JSON.parse(gameStateSessionItem);
+                fanCount = gameState.fanCount;
+
+                Object.values(thingTypes).forEach(tt => {
+                    let matchingSavedItems = Object.values(gameState.thingTypes).filter(x => x.key == tt.key);
+                    if (matchingSavedItems && matchingSavedItems[0]) {
+                        tt.owned = matchingSavedItems[0].owned;
+                        tt.upgrades.forEach((x,i) => tt.upgrades[i].owned = matchingSavedItems[0].upgrades[i]?.owned)
+                    }
+                });
+
+                drawFanCount();
+                drawMetrics();
+            }
+        }
+    </script>
+</body>
+
+</html>
