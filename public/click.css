@@ -2,6 +2,11 @@ h1 {
     margin-top: 10px;
 }
 
+h3 {
+    font-size: 1rem;
+    margin-top:0;
+}
+
 ul {
     padding: 0;
 }
@@ -10,14 +15,15 @@ li {
     list-style: none;
     margin-bottom: 10px;
     padding: 3px;
-    max-width: 300px;
+    max-width: 600px;
     border: rgb(84, 84, 84) 2px solid;
     display:none;
     position: relative;
+    flex-direction: row;
 }
 
 li.show {
-    display:block;
+    display:flex;
 }
 
 li button {
@@ -30,7 +36,7 @@ li button:disabled {
 
 li.show + li:not(.show) {
     display:block;
-    filter:blur(4px);
+    filter:blur(3px);
 }
 
 li.show + li:not(.show)::after {
@@ -40,7 +46,7 @@ li.show + li:not(.show)::after {
     left:0;
     width: 100%;
     height:100%;
-    background-color: rgba(0, 0, 0, 0.4);
+    background-color: rgba(0, 0, 0, 0.5);
 }
 
 .gameContainer {
@@ -48,6 +54,7 @@ li.show + li:not(.show)::after {
 }
 
 .description {
+    margin-top:5px;
     font-style: italic;
     font-size: 0.8rem;
 }
@@ -68,7 +75,18 @@ li.show + li:not(.show)::after {
     
 }
 
+.upgrade {
+    margin-left: 10px;
+    margin-top: 2px;
+    padding: 4px;
+    border: rgb(84, 84, 84) 2px solid;
+}
+
 #fan-count {
     font-size: 2rem;
     font-weight: bold;
+}
+
+#make-fan-button {
+    font-size: 1.2rem;
 }

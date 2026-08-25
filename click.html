@@ -36,8 +36,12 @@
             TODO: Style stuff
         */
 
-        let fanCount = 0;
+        //!!SET TO 1000 for testing!!
+        let fanCount = 1000;
         let maxFanCount = 0;
+        let globalUpgrades = {
+
+        };
         let thingTypes = {
             volunteer: {
                 key: "volunteer"
@@ -45,6 +49,32 @@
                 , description: "A friend, partner, or other exploitable party kind enough to help you out"
                 , productionSpeed: 0.2
                 , owned: 0
+                , upgrades: [
+                    {
+                        upgradeFun: x => x + 0.8
+                        , name: "Internships"
+                        , description: "Your volunteers are now interns, working as hard as employees but without the pesky need to pay them"
+                        , effectDescription: "Volunteers work as hard as employees (+0.8fps)"
+                        , price: 500
+                        , owned: false
+                    },
+                    {
+                        upgradeFun: x => x * 2
+                        , name: "Parasocial relationships"
+                        , description: "They love you, they really love you."
+                        , effectDescription: "Multiplies production speed by 2"
+                        , price: 2000
+                        , owned: false
+                    },
+                    {
+                        upgradeFun: x => x * 10
+                        , name: "Cult of the cool"
+                        , description: "You are a god, they are your sheep."
+                        , effectDescription: "Multiplies production speed by 10"
+                        , price: 20000
+                        , owned: false
+                    },
+                ]
                 , show: true
             },
             employee: {
@@ -103,16 +133,32 @@
             //Add function to each thing which calculates the current buy price
             element.calculatePrice = p => Math.floor(Math.pow(1.25, element.owned) * element.price);
 
+            const upgradeElements = element?.upgrades?.map((u,i) =>
+                `
+                    <div class="upgrade">
+                        <h3>${u.name}</h3>
+                        <p class="description">${u.description}</p>
+                        <button disabled onclick="buyUpgrade('${element.key}',${i})">Buy</button>
+                    </div>
+                `).reduce((acc, x) => acc += x, "") ?? "";
+
             document.getElementById("shop").innerHTML +=
                 `<li id="${element.key}-li" class="${element.show ? "show" : ""}">
-                    <div>
-                        <button onclick="buyThing('${element.key}')" disabled>Buy</button>
-                        <span class="itemTitle">${element.key}</span>
+                    <div class="building">
+                        <div>
+                            <button onclick="buyThing('${element.key}')" disabled>Buy</button>
+                            <span class="itemTitle">${element.key}</span>
+                        </div>
+                        <div class="itemMetrics">
+                            Price: <span id="${element.key}-price">${element.calculatePrice()}</span> 🪭 - Owned: <span id="${element.key}-count">${element.owned}</span>
+                            <br />
+                            Base production speed: <span id="${element.key}">${element.productionSpeed}</span>fps
+                        </div>
+                        <div class="description">${element.description}</div>
                     </div>
-                    <div class="itemMetrics">
-                        Price: <span id="${element.key}-price">${element.calculatePrice()}</span> 🪭 - Owned: <span id="${element.key}-count">${element.owned}</span>
+                    <div class="building-upgrades">
+                        ${upgradeElements}
                     </div>
-                    <div class="description">${element.description}</div>
                 </li>`;
         });
 
@@ -162,6 +208,14 @@
             }
         }
 
+        function buyUpgrade(thingKey,upgradeIndex){
+            const upgrade = thingTypes[thingKey].upgrades[upgradeIndex];
+            if(upgrade.price <= fanCount) {
+                fanCount -= upgrade.price;
+                upgrade.owned = true;
+            }
+        }
+
         function gameLoop() {
             Object.values(thingTypes).forEach(thing => {
                 fanCount += thing.owned * thing.productionSpeed;
@@ -177,6 +231,15 @@
                 else if (fanCount < thing.calculatePrice()) {
                     thingBtnElement?.setAttribute("disabled", true);
                 }
+
+                thing.upgrades?.forEach((u,i) => {
+                    const ueBtn = thingElement.getElementsByClassName('upgrade')[i].getElementsByTagName("button")[0];
+                    if(u.price <= fanCount && !u.owned) {
+                        ueBtn?.removeAttribute("disabled");
+                    } else {
+                        ueBtn?.setAttribute("disabled", true);
+                    }
+                });
             });
             drawFanCount();
         }
